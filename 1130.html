@@ -18,16 +18,16 @@
         body {
             font-family: 'Inter', 'Noto Sans TC', sans-serif;
             background-color: #f3f4f6; /* 淺灰色背景 */
-            font-size: 14px; /* 調整字體大小至 14px 以提升閱讀性 */
-            line-height: 1.3; /* 略為縮小行高，以節省空間 */
+            font-size: 14px; 
+            line-height: 1.3; 
             margin: 0; 
             padding: 0;
         }
 
-        /* 確保履歷容器在列印時能保持單頁A4大小 */
+        /* 確保履歷容器在列印時寬度一致，但移除 min-height 防止換頁誤判 */
         #resume-container {
             width: 210mm; /* A4 寬度 */
-            min-height: 297mm; /* A4 高度 */
+            /* 【關鍵修正 2】移除 min-height: 297mm，讓高度彈性伸展 */
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
         /* 自我介紹首行縮排 */
@@ -40,6 +40,7 @@
         }
 
         /* --- PDF 匯出修復：強制區塊內不分頁 --- */
+        /* 這些樣式可以防止長區塊被切開 */
         .no-break {
             page-break-inside: avoid;
         }
@@ -68,9 +69,9 @@
 </head>
 <body>
 
-    <!-- 【關鍵修正 2】新增外部包裹層，將瀏覽器檢視的邊距與居中效果應用在此，讓 body 與 PDF 目標乾淨 -->
+    <!-- 外部包裹層，將瀏覽器檢視的邊距與居中效果應用在此 -->
     <div id="app-wrapper" class="p-4 md:p-8">
-        <!-- 履歷主容器 - 移除圓角樣式，實現直角 A4 大小 -->
+        <!-- 履歷主容器 -->
         <div id="resume-container" class="max-w-4xl mx-auto bg-white overflow-hidden">
             
             <!-- 頂部資訊欄: 使用 px-8 維持一致的左右間距 -->
@@ -306,7 +307,7 @@
             // PDF 匯出函式
             const exportPdf = () => {
                 const opt = {
-                    // 確保 margin 為 0
+                    // 確保 margin 為 0，讓 PDF 從最邊緣開始繪製
                     margin: 0, 
                     filename: '周子瑄_履歷表_經管系.pdf',
                     image: { type: 'jpeg', quality: 0.98 },
@@ -316,16 +317,16 @@
                         dpi: 300, 
                         letterRendering: true, 
                         useCORS: true,
-                        scale: 4
+                        // 【關鍵修正 3】明確指定從 Y 軸 0 點開始擷取，避免垂直偏移
+                        scrollY: 0, 
+                        // 調整縮放比例，維持解析度同時增加穩定性
+                        scale: 2 
                     },
                     // 設定 A4 尺寸和直向
                     jsPDF: { 
                         unit: 'mm', 
                         format: 'a4', 
                         orientation: 'portrait',
-                        // 【關鍵修正 3】明確指定 PDF 內容的起點為 (0, 0)
-                        x: 0,
-                        y: 0 
                     }
                 };
 
