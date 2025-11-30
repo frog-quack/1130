@@ -12,35 +12,31 @@
         /* 使用 Inter 字體以獲得乾淨的現代感 */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
         /* 載入台灣常用字體以確保中文顯示良好 */
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght=300;400;700&display=swap');
         
-        /* 【關鍵修正 1】徹底清除 body 的預設邊距，防止 PDF 垂直偏移 */
         body {
             font-family: 'Inter', 'Noto Sans TC', sans-serif;
-            background-color: #f3f4f6; /* 淺灰色背景 */
+            background-color: #f3f4f6; 
             font-size: 14px; 
             line-height: 1.3; 
             margin: 0; 
             padding: 0;
         }
 
-        /* 確保履歷容器在列印時寬度一致，但移除 min-height 防止換頁誤判 */
         #resume-container {
-            width: 210mm; /* A4 寬度 */
-            /* 移除 min-height: 297mm，讓高度彈性伸展 */
+            width: 210mm; 
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
-        /* 自我介紹首行縮排 */
+        
         .indent-2em {
             text-indent: 2em;
         }
-        /* 確保按鈕在 PDF 匯出時顏色正常 */
+        
         #export-pdf-btn {
             print-color-adjust: exact;
         }
 
         /* --- PDF 匯出修復：強制區塊內不分頁 --- */
-        /* 這些樣式可以防止長區塊被切開 */
         .no-break {
             page-break-inside: avoid;
         }
@@ -49,17 +45,27 @@
             display: block; 
         }
 
+        /* 舊版競賽描述的對齊 CSS (不再使用，但保留以防萬一) */
+        .contest-description-aligned {
+            display: flex;
+            margin-top: 0.25rem;
+            color: #6b7280;
+            line-height: 1.5;
+        }
+        .contest-description-aligned .content-text {
+            flex: 1; 
+            color: #6b7280; 
+        }
+
+
         @media print {
             body { background: none; }
-            /* 調整按鈕在列印時隱藏 (備用 CSS 方案) */
             #export-pdf-btn-wrapper { display: none; }
-            /* 讓履歷填滿整個列印頁面 */
             #resume-container {
                 width: 100%;
                 margin: 0;
                 box-shadow: none;
             }
-            /* 隱藏外部包裹層的邊距 */
             #app-wrapper {
                 padding: 0 !important;
                 margin: 0 !important;
@@ -81,7 +87,7 @@
                     <div class="w-32 h-32 bg-gray-200 rounded-xl flex items-center justify-center overflow-hidden border-2 border-white flex-shrink-0">
                         <!-- 圖片路徑更新為 ?v=3，並修正 style="object-fit: contain;" 來保持圖片原始比例 -->
                         <img 
-                            src="upload picture/me.jpg?v=3" 
+                            src="uploads/me.jpg?v=3" 
                             alt="周子瑄專業照片" 
                             class="w-full h-full" 
                             onerror="this.onerror=null; this.src='https://placehold.co/128x128/9CA3AF/FFFFFF?text=Photo';" 
@@ -130,7 +136,7 @@
                 <!-- 移除 lg:，強制讓 PDF 輸出維持 4/8 兩欄式 -->
                 <div class="grid grid-cols-12 gap-6 no-break-flex">
                     
-                    <!-- 左側：學歷、技能與特質 (lg:col-span-4) -->
+                    <!-- 左側：學歷、技能與特質 (col-span-4) -->
                     <div class="col-span-4">
                         
                         <!-- 學歷背景 - 加入 no-break class -->
@@ -140,7 +146,7 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
                                 學歷背景
                             </h2>
-                            <!-- 亞洲大學 -->
+                            <!-- 亞洲大學 - 保持原狀（藍線） -->
                             <div class="flex justify-between items-start mb-2 border-l-4 border-blue-500 pl-4 py-1">
                                 <div>
                                     <h3 class="font-semibold text-gray-800">私立亞洲大學 經營管理系</h3>
@@ -148,7 +154,7 @@
                                 </div>
                                 <span class="text-sm text-gray-500 font-medium flex-shrink-0">2025 - 2028</span>
                             </div>
-                            <!-- 興華高中 -->
+                            <!-- 興華高中 - 保持原狀（灰線） -->
                             <div class="flex justify-between items-start mb-2 border-l-4 border-gray-300 pl-4 py-1">
                                 <div>
                                     <h3 class="font-semibold text-gray-800">縣立興華高中</h3>
@@ -156,7 +162,7 @@
                                 </div>
                                 <span class="text-sm text-gray-500 flex-shrink-0">2023 - 2025</span>
                             </div>
-                            <!-- 竹南國中 -->
+                            <!-- 竹南國中 - 保持原狀（灰線） -->
                             <div class="flex justify-between items-start mb-2 border-l-4 border-gray-300 pl-4 py-1">
                                 <div>
                                     <h3 class="font-semibold text-gray-800">竹南國中</h3>
@@ -196,10 +202,10 @@
                         </section>
                     </div>
 
-                    <!-- 右側：競賽、經歷與目標 (lg:col-span-8) -->
+                    <!-- 右側：競賽、經歷與目標 (col-span-8) -->
                     <div class="col-span-8">
 
-                        <!-- 競賽與特殊經歷 - 加入 no-break class -->
+                        <!-- 競賽與特殊經歷 - 採用學歷區塊的邊線風格，結構簡潔清晰 -->
                         <section class="mt-4 mb-3 no-break">
                             <h2 class="text-xl font-bold border-b-2 border-gray-300 pb-1 mb-2 text-gray-700 flex items-center">
                                 <!-- 圖標: 五角星 -->
@@ -210,35 +216,47 @@
                             <!-- 競賽經驗：亞洲大學綠生活 -->
                             <div class="mb-3">
                                 <h3 class="font-semibold text-gray-800 mb-1">競賽經驗: 2025 亞洲大學綠生活企劃</h3>
-                                <div class="flex justify-between items-start text-base text-gray-600 pl-4 border-l-2 border-blue-500">
+                                <div class="flex justify-between items-start text-base text-gray-600 pl-4 border-l-2 border-blue-500 py-1">
                                     <p>名次：<span class="font-medium text-blue-600">初審獲選，準備決賽</span></p>
                                     <span class="text-sm text-gray-500 flex-shrink-0">2025</span>
                                 </div>
-                                <p class="text-base text-gray-500 mt-1 pl-4">描述：主動參與校內競賽，展現企劃撰寫、市場分析與團隊溝通協調能力。</p>
+                                <!-- 使用 Flexbox 結構對齊描述內容 -->
+                                <div class="text-base text-gray-500 mt-1 pl-4 flex">
+                                    <span class="flex-shrink-0">描述：</span>
+                                    <span class="flex-1">負責撰寫綠色行銷企劃書並進行初步<span class="font-bold">市場調查</span>，成功展現<span class="font-bold">文件撰寫、數據分析</span>與<span class="font-bold">高效團隊協作</span>能力。</span>
+                                </div>
                             </div>
 
                             <!-- 競賽經驗：AI回憶明信片 -->
                             <div class="mb-3">
                                 <h3 class="font-semibold text-gray-800 mb-1">競賽經驗: AI回憶明信片創新應用</h3>
-                                <div class="flex justify-between items-start text-base text-gray-600 pl-4 border-l-2 border-blue-500">
+                                <div class="flex justify-between items-start text-base text-gray-600 pl-4 border-l-2 border-blue-500 py-1">
                                     <p>名次：<span class="font-medium text-blue-600">優等</span></p>
                                     <span class="text-sm text-gray-500 flex-shrink-0">2025</span>
                                 </div>
-                                <p class="text-base text-gray-500 mt-1 pl-4">描述：成功運用 AI 技術進行內容創作，培養專案創新與跨領域整合的實戰力。</p>
+                                <!-- 使用 Flexbox 結構對齊描述內容 -->
+                                <div class="text-base text-gray-500 mt-1 pl-4 flex">
+                                    <span class="flex-shrink-0">描述：</span>
+                                    <span class="flex-1">應用<span class="font-bold">生成式 AI</span> 創新開發「回憶明信片」產品，實踐<span class="font-bold">跨領域整合</span>，展現<span class="font-bold">專案創新思維</span>及技術應用能力。</span>
+                                </div>
                             </div>
                             
                             <!-- 特殊經歷：AI 應用與開發 -->
                             <div class=" mb-3">
                                 <h3 class="font-semibold text-gray-800 mb-1">特殊經歷: AI 應用與開發</h3>
-                                <div class="flex justify-between items-start text-base text-gray-600 pl-4 border-l-2 border-blue-500">
+                                <div class="flex justify-between items-start text-base text-gray-600 pl-4 border-l-2 border-blue-500 py-1">
                                     <p>項目：用 AI 寫過 Discord 機器人</p>
                                     <span class="text-sm text-gray-500 flex-shrink-0">自學/專案</span>
                                 </div>
-                                <p class="text-base text-gray-500 mt-1 pl-4">描述：展現了對新科技的快速學習與應用實作能力，能將編程思維應用於實際問題解決。</p>
+                                <!-- 使用 Flexbox 結構對齊描述內容 -->
+                                <div class="text-base text-gray-500 mt-1 pl-4 flex">
+                                    <span class="flex-shrink-0">描述：</span>
+                                    <span class="flex-1"><span class="font-bold">自主學習 Python</span> 並開發 Discord 機器人，證明能<span class="font-bold">快速掌握新技術</span>，並運用<span class="font-bold">編程邏輯解決實務問題</span>。</span>
+                                </div>
                             </div>
                         </section>
 
-                        <!-- 應徵職務 - 加入 no-break class -->
+                        <!-- 應徵職務 - 替換回原版 Flexbox 結構 -->
                         <section class="mt-4 mb-3 no-break">
                             <h2 class="text-xl font-bold border-b-2 border-gray-300 pb-1 mb-2 text-gray-700 flex items-center">
                                 <!-- 圖標: 標靶 -->
@@ -251,6 +269,7 @@
                                 <li class="flex items-start">
                                     <!-- 標籤與子彈符號 -->
                                     <span class="flex-shrink-0 mr-1">
+                                        <!-- 將子彈符號顏色調成跟文字一樣，以維持您最初的風格 -->
                                         <span class="inline-block text-gray-600 mr-1">•</span> 
                                         <span class="font-medium text-blue-600">尋求實習機會：</span>
                                     </span>
@@ -316,7 +335,7 @@
 
                 const originalAppWrapperClass = appWrapper.className;
                 const originalResumeContainerClass = resumeContainer.className;
-                // 【新增】儲存原始樣式，準備應用負邊距
+                // 【關鍵】儲存原始樣式，準備應用負邊距
                 const originalMarginLeft = resumeContainer.style.marginLeft;
 
                 // --- 核心修正步驟 ---
@@ -325,8 +344,7 @@
                 resumeContainer.className = 'bg-white overflow-hidden'; 
 
                 // 2. 【終極修正】強制施加負左邊距，讓內容向左微幅移動，以抵消 PDF 產生的微小右移空隙
-                // 經驗值約 -5px 可以在 A4 邊界上達到完美對齊
-                resumeContainer.style.marginLeft = '-4px'; 
+                resumeContainer.style.marginLeft = '-8px'; 
 
                 const opt = {
                     // 確保 margin 為 0，讓 PDF 從最邊緣開始繪製
