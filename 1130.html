@@ -79,13 +79,13 @@
                 <div class="flex items-center">
                     <!-- 放大照片容器尺寸 w-32 h-32 -->
                     <div class="w-32 h-32 bg-gray-200 rounded-xl flex items-center justify-center overflow-hidden border-2 border-white flex-shrink-0">
-                        <!-- 圖片路徑更新為 ?v=3，並保持 style="object-fit: cover;" 來確保比例 -->
+                        <!-- 圖片路徑更新為 ?v=3，並修正 style="object-fit: contain;" 來保持圖片原始比例 -->
                         <img 
-                            src="upload picture/me.jpg?v=3" 
+                            src="uploads/me.jpg?v=3" 
                             alt="周子瑄專業照片" 
                             class="w-full h-full" 
                             onerror="this.onerror=null; this.src='https://placehold.co/128x128/9CA3AF/FFFFFF?text=Photo';" 
-                            style="object-fit: cover;"
+                            style="object-fit: contain;"
                         >
                     </div>
                     <div class="ml-4">
@@ -172,7 +172,7 @@
                                 <!-- 圖標: 齒輪 -->
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.44a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0-.33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.44a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33 1.65 1.65 0 0 0 1.51-1V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.44a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82 1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.44a1.65 1.65 0 0 0-1.51 1z"/></svg>
                                 技能與專長
-                            </h2>
+                            </strong></h2>
                             <ul class="space-y-1.5 text-base text-gray-600">
                                 <li class="flex items-center"><span class="w-2 h-2 rounded-full bg-blue-500 mr-2 flex-shrink-0"></span>溝通協調與團隊協作</li>
                                 <li class="flex items-center"><span class="w-2 h-2 rounded-full bg-blue-500 mr-2 flex-shrink-0"></span>積極主動、快速學習新知</li>
