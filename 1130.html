@@ -127,10 +127,11 @@
 
                 <!-- 調整網格比例：保持 1:2 (col-span-4 / col-span-8) -->
                 <!-- 外層 div 加入 no-break-flex class，防止整個左右排版被切開 -->
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 no-break-flex">
+                <!-- 【修正】移除 lg:，強制讓 PDF 輸出維持 4/8 兩欄式 -->
+                <div class="grid grid-cols-12 gap-6 no-break-flex">
                     
                     <!-- 左側：學歷、技能與特質 (lg:col-span-4) -->
-                    <div class="lg:col-span-4">
+                    <div class="col-span-4">
                         
                         <!-- 學歷背景 - 加入 no-break class -->
                         <section class="mt-4 mb-3 no-break">
@@ -196,7 +197,7 @@
                     </div>
 
                     <!-- 右側：競賽、經歷與目標 (lg:col-span-8) -->
-                    <div class="lg:col-span-8">
+                    <div class="col-span-8">
 
                         <!-- 競賽與特殊經歷 - 加入 no-break class -->
                         <section class="mt-4 mb-3 no-break">
