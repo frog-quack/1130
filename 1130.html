@@ -51,7 +51,7 @@
 
         @media print {
             body { background: none; }
-            /* 調整按鈕在列印時隱藏 */
+            /* 調整按鈕在列印時隱藏 (備用 CSS 方案) */
             #export-pdf-btn-wrapper { display: none; }
             /* 讓履歷填滿整個列印頁面 */
             #resume-container {
@@ -306,6 +306,12 @@
             
             // PDF 匯出函式
             const exportPdf = () => {
+                const buttonWrapper = document.getElementById('export-pdf-btn-wrapper');
+                
+                // 【核心修正】在開始匯出前，強制在 DOM 中隱藏按鈕
+                const originalDisplay = buttonWrapper.style.display; 
+                buttonWrapper.style.display = 'none';
+
                 const opt = {
                     // 確保 margin 為 0，讓 PDF 從最邊緣開始繪製
                     margin: 0, 
@@ -317,7 +323,7 @@
                         dpi: 300, 
                         letterRendering: true, 
                         useCORS: true,
-                        // 【關鍵修正 3】明確指定從 Y 軸 0 點開始擷取，避免垂直偏移
+                        // 明確指定從 Y 軸 0 點開始擷取
                         scrollY: 0, 
                         // 調整縮放比例，維持解析度同時增加穩定性
                         scale: 2 
@@ -331,7 +337,10 @@
                 };
 
                 // 呼叫 html2pdf 進行匯出
-                html2pdf().set(opt).from(resumeContainer).save();
+                html2pdf().set(opt).from(resumeContainer).save().then(() => {
+                    // 【核心修正】匯出完成後，恢復按鈕顯示
+                    buttonWrapper.style.display = originalDisplay;
+                });
             };
 
             // 綁定點擊事件
