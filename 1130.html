@@ -27,7 +27,7 @@
         /* 確保履歷容器在列印時寬度一致，但移除 min-height 防止換頁誤判 */
         #resume-container {
             width: 210mm; /* A4 寬度 */
-            /* 【關鍵修正 2】移除 min-height: 297mm，讓高度彈性伸展 */
+            /* 移除 min-height: 297mm，讓高度彈性伸展 */
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
         /* 自我介紹首行縮排 */
@@ -81,7 +81,7 @@
                     <div class="w-32 h-32 bg-gray-200 rounded-xl flex items-center justify-center overflow-hidden border-2 border-white flex-shrink-0">
                         <!-- 圖片路徑更新為 ?v=3，並修正 style="object-fit: contain;" 來保持圖片原始比例 -->
                         <img 
-                            src="upload picture/me.jpg?v=3" 
+                            src="uploads/me.jpg?v=3" 
                             alt="周子瑄專業照片" 
                             class="w-full h-full" 
                             onerror="this.onerror=null; this.src='https://placehold.co/128x128/9CA3AF/FFFFFF?text=Photo';" 
@@ -127,7 +127,7 @@
 
                 <!-- 調整網格比例：保持 1:2 (col-span-4 / col-span-8) -->
                 <!-- 外層 div 加入 no-break-flex class，防止整個左右排版被切開 -->
-                <!-- 【修正】移除 lg:，強制讓 PDF 輸出維持 4/8 兩欄式 -->
+                <!-- 移除 lg:，強制讓 PDF 輸出維持 4/8 兩欄式 -->
                 <div class="grid grid-cols-12 gap-6 no-break-flex">
                     
                     <!-- 左側：學歷、技能與特質 (lg:col-span-4) -->
@@ -172,7 +172,7 @@
                                 <!-- 圖標: 齒輪 -->
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.44a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0-.33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.44a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33 1.65 1.65 0 0 0 1.51-1V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.44a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82 1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.44a1.65 1.65 0 0 0-1.51 1z"/></svg>
                                 技能與專長
-                            </strong></h2>
+                            </h2>
                             <ul class="space-y-1.5 text-base text-gray-600">
                                 <li class="flex items-center"><span class="w-2 h-2 rounded-full bg-blue-500 mr-2 flex-shrink-0"></span>溝通協調與團隊協作</li>
                                 <li class="flex items-center"><span class="w-2 h-2 rounded-full bg-blue-500 mr-2 flex-shrink-0"></span>積極主動、快速學習新知</li>
@@ -303,15 +303,30 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const exportBtn = document.getElementById('export-pdf-btn');
+            const appWrapper = document.getElementById('app-wrapper'); 
             const resumeContainer = document.getElementById('resume-container');
             
             // PDF 匯出函式
             const exportPdf = () => {
                 const buttonWrapper = document.getElementById('export-pdf-btn-wrapper');
                 
-                // 【核心修正】在開始匯出前，強制在 DOM 中隱藏按鈕
+                // --- 儲存原始狀態 ---
                 const originalDisplay = buttonWrapper.style.display; 
                 buttonWrapper.style.display = 'none';
+
+                const originalAppWrapperClass = appWrapper.className;
+                const originalResumeContainerClass = resumeContainer.className;
+                // 【新增】儲存原始樣式，準備應用負邊距
+                const originalMarginLeft = resumeContainer.style.marginLeft;
+
+                // --- 核心修正步驟 ---
+                // 1. 移除外部居中和邊距
+                appWrapper.className = ''; 
+                resumeContainer.className = 'bg-white overflow-hidden'; 
+
+                // 2. 【終極修正】強制施加負左邊距，讓內容向左微幅移動，以抵消 PDF 產生的微小右移空隙
+                // 經驗值約 -5px 可以在 A4 邊界上達到完美對齊
+                resumeContainer.style.marginLeft = '-5px'; 
 
                 const opt = {
                     // 確保 margin 為 0，讓 PDF 從最邊緣開始繪製
@@ -320,13 +335,13 @@
                     image: { type: 'jpeg', quality: 0.98 },
                     html2canvas: { 
                         logging: false, 
-                        // 維持 DPI 和 Scale 以確保中文清晰度
                         dpi: 300, 
                         letterRendering: true, 
                         useCORS: true,
+                        // 明確指定從 X 軸 0 點開始擷取
+                        scrollX: 0, 
                         // 明確指定從 Y 軸 0 點開始擷取
                         scrollY: 0, 
-                        // 調整縮放比例，維持解析度同時增加穩定性
                         scale: 2 
                     },
                     // 設定 A4 尺寸和直向
@@ -339,7 +354,14 @@
 
                 // 呼叫 html2pdf 進行匯出
                 html2pdf().set(opt).from(resumeContainer).save().then(() => {
-                    // 【核心修正】匯出完成後，恢復按鈕顯示
+                    // --- 恢復原始狀態 ---
+                    // 恢復所有原始類別和樣式
+                    appWrapper.className = originalAppWrapperClass;
+                    resumeContainer.className = originalResumeContainerClass;
+                    // 【恢復】移除負邊距，恢復原本的樣式
+                    resumeContainer.style.marginLeft = originalMarginLeft;
+                    
+                    // 恢復按鈕顯示
                     buttonWrapper.style.display = originalDisplay;
                 });
             };
